@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
         fontWeight: '600',
     },
     secondaryTitle: {
-        color: colors.green[300],
+        color: colors.gray[400],
         fontSize: 16,
     }
 });
