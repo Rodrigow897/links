@@ -1,6 +1,7 @@
 import { Button } from "@/components/button";
 import { Categories } from "@/components/categories";
 import { Input } from "@/components/input";
+import { linkStorage } from "@/storage/link-storage";
 import { colors } from "@/styles/colors";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
@@ -14,20 +15,34 @@ export default function Add() {
     const [name, setName] = useState("")
     const [url, setUrl] = useState("")
 
-    function handleAdd() {
-        if(!category) {
-            return Alert.alert("Categoria", "Selecione a categoria")
-        }
+    async function handleAdd() {
+        try {
+            if(!category) {
+                return Alert.alert("Categoria", "Selecione a categoria")
+            }
 
-        if(!name.trim()){
-            Alert.alert("Titulo", "Informe o nome")
-        }
+            if(!name.trim()){
+                Alert.alert("Titulo", "Informe o nome")
+            }
 
-        if(!url.trim()){
-            Alert.alert("Titulo", "Informe a URL")
-        }
+            if(!url.trim()){
+                Alert.alert("Titulo", "Informe a URL")
+            }
 
-        console.log({category, name, url})
+            await linkStorage.save({
+                id: new Date().getTime().toString(),
+                name,
+                url,
+                category
+            });
+
+            const data = await linkStorage.get()
+            console.log(data)
+
+        } catch (error) {
+            Alert.alert("Erro", "Não foi possivel salvar o link")
+            console.log(error)
+        }
     }
 
     return (
@@ -59,6 +74,7 @@ export default function Add() {
                     placeholder="URL"
                     onChangeText={setUrl}
                     autoCorrect={false}
+                    autoCapitalize="none"
                 />
                 <Button title="Adicionar" onPress={handleAdd}/>
             </View>
