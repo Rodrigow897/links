@@ -22,11 +22,11 @@ export default function Add() {
             }
 
             if(!name.trim()){
-                Alert.alert("Titulo", "Informe o nome")
+                return Alert.alert("Titulo", "Informe o nome")
             }
 
             if(!url.trim()){
-                Alert.alert("Titulo", "Informe a URL")
+                return Alert.alert("Titulo", "Informe a URL")
             }
 
             await linkStorage.save({
