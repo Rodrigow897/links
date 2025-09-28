@@ -5,7 +5,7 @@ import { colors } from "@/styles/colors";
 import { MaterialIcons } from "@expo/vector-icons";
 import { router } from "expo-router";
 import { useState } from "react";
-import { Text, TouchableOpacity, View } from "react-native";
+import { Alert, Text, TouchableOpacity, View, } from "react-native";
 import { styles } from "./styles";
 
 
@@ -15,7 +15,19 @@ export default function Add() {
     const [url, setUrl] = useState("")
 
     function handleAdd() {
-        console.log({name, url})
+        if(!category) {
+            return Alert.alert("Categoria", "Selecione a categoria")
+        }
+
+        if(!name.trim()){
+            Alert.alert("Titulo", "Informe o nome")
+        }
+
+        if(!url.trim()){
+            Alert.alert("Titulo", "Informe a URL")
+        }
+
+        console.log({category, name, url})
     }
 
     return (
@@ -44,7 +56,7 @@ export default function Add() {
                     autoCorrect={false}
                 />
                 <Input 
-                    placeholder="Url"
+                    placeholder="URL"
                     onChangeText={setUrl}
                     autoCorrect={false}
                 />
