@@ -1,8 +1,10 @@
+import { linkStorage, LinkStorage } from '@/storage/link-storage';
 import { colors } from '@/styles/colors';
 import { MaterialIcons } from '@expo/vector-icons';
-import { router } from 'expo-router';
-import { useState } from 'react';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useState } from 'react';
 import {
+  Alert,
   FlatList,
   Image, Modal,
   Text,
@@ -17,7 +19,25 @@ import { Option } from '@/components/option';
 import { categories } from '@/utils/categories';
 
 export default function Index() {
+  const [links, setLinks] = useState<LinkStorage[]>([])
   const [category, setCategory] = useState(categories[0].name)
+
+  async function getLinks() {
+    try {
+      const response = await linkStorage.get()
+      setLinks(response)
+
+    } catch (error) {
+      Alert.alert("Erro", "Não foi possivel listar os links")
+    }
+  }
+
+  useFocusEffect(
+    useCallback(()=>{
+      getLinks()
+  }, [])
+)
+
   return (
     <View style={styles.container}>
       <View style={styles.header}>
@@ -37,12 +57,12 @@ export default function Index() {
       
 
       <FlatList
-        data={["1", "2", "3", "4"]}
-        keyExtractor={item => item}
-        renderItem={()=> (
+        data={links}
+        keyExtractor={(item) => item.id}
+        renderItem={({item})=> (
           <Link 
-            name='Rocketseat' 
-            url='https://rocketseat.com.br' 
+            name={item.name}
+            url={item.url}
             onDatails={() => console.log("clicou!")}
           />
         )}
