@@ -8,11 +8,12 @@ type Props = TouchableOpacityProps & {
     name: string;
     icon: keyof typeof MaterialIcons.glyphMap;
     variant?: 'primary' | 'secondary';
+    onPress?: () => void
 }
 
-export function Option({ name, icon, variant = 'primary', ...rest }: Props) {
+export function Option({ name, icon, variant = 'primary', onPress, ...rest }: Props) {
     return (
-        <TouchableOpacity style={styles.container}>
+        <TouchableOpacity style={styles.container} onPress={onPress}>
             <MaterialIcons 
             name={icon} 
             size={20} 

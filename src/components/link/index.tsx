@@ -7,10 +7,10 @@ import { styles } from "./styles";
 type Props = {
     name: string;
     url: string;
-    onDatails: () => void;
+    onDetails: () => void;
 }
 
-export function Link({name, url, onDatails}: Props) {
+export function Link({name, url, onDetails}: Props) {
     return (
         <View style={styles.container}>
             <View style={styles.details}>
@@ -21,7 +21,7 @@ export function Link({name, url, onDatails}: Props) {
                     {url}
                 </Text>
             </View>
-            <TouchableOpacity onPress={onDatails}>
+            <TouchableOpacity onPress={onDetails}>
                 <MaterialIcons name="more-horiz" size={20} color={colors.gray[400]} />
             </TouchableOpacity>
         </View>    
