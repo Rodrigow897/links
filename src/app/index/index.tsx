@@ -6,7 +6,9 @@ import { useCallback, useState } from 'react';
 import {
   Alert,
   FlatList,
-  Image, Modal,
+  Image,
+  Linking,
+  Modal,
   Text,
   TouchableOpacity,
   View
@@ -58,6 +60,16 @@ export default function Index() {
       {style: "cancel", text: "Não"},
       {text: "Sim", onPress: linkRemove },
     ])
+  }
+
+  async function handleOpen() {
+    try {
+      await Linking.openURL(link.url)
+      setShowModal(false)
+    } catch (error) {
+      Alert.alert("Link", "Não foi possivel abrir o link")
+      console.log(error)
+    }
   }
 
   useFocusEffect(
@@ -116,7 +128,7 @@ export default function Index() {
 
             <View style={styles.modalFooter}>
               <Option name='Excluir' icon='delete' variant='secondary' onPress={handleRemove}/>
-              <Option name='Abrir' icon='language'/>
+              <Option name='Abrir' icon='language' onPress={handleOpen}/>
             </View>
           </View>
         </View>
