@@ -19,7 +19,7 @@ export default function Add() {
         try {
             if(!category) {
                 return Alert.alert("Categoria", "Selecione a categoria")
-            }
+            }  
 
             if(!name.trim()){
                 return Alert.alert("Titulo", "Informe o nome")
